@@ -1,0 +1,126 @@
+Pour activer un dossier comme repository Git, il suffit de se placer dans ce dossier avec le Terminal puis d'utiliser la commande 
+git init. 
+Pour gérer un repository, Git génère un index de tous les fichiers dont il doit faire le suivi. Lorsque vous créez un fichier 
+dans un repository, vous devez donc l'ajouter à l'index Git à l'aide de la commande git add nomDeVotreFichier.extension. 
+Par exemple :
+
+git add checklist-vacances.md
+----------------------------------------------------------------------------------------------
+Pour gagner du temps, vous pouvez ajouter tous les fichiers dans le répertoire courant en tapant
+git add .
+dans la console. 
+Évidemment, faites bien attention quand vous utilisez ce raccourci à ne pas rajouter trop de fichiers à l'index.
+----------------------------------------------------------------------------------------------
+Lorsque vous modifiez votre repository, vous devez demander à Git d'enregistrer vos modifications en faisant un git commit. 
+L'option-m vous permet de lui envoyer un message décrivant les modifications effectuées, ce qui s'avèrera très utile pour vous 
+par la suite, you'll see! :) Par exemple : 
+
+git commit -m "mon commentaire"
+----------------------------------------------------------------------------------------------
+Grâce à la commande  git log qui vous affiche la liste de tous les commits que vous avez réalisés ! 
+
+Le sens de lecture du log est le suivant : on part du commit le plus récent en haut de la liste, au commit le plus vieux en 
+bas de la liste. 
+----------------------------------------------------------------------------------------------
+Lorsque vous effectuez une série de commits sur un projet, il peut vous arriver de vouloir remonter dans le temps à la recherche 
+d'erreurs éventuelles par exemple. Pour vous positionner sur un commit donné de votre historique, il vous suffit d'utiliser 
+la commande git checkout de la façon suivante : 
+
+git checkout SHADuCommit
+
+Pour revenir à votre branche principale (au commit le plus récent), on utilise la même commande : 
+
+git checkout master
+----------------------------------------------------------------------------------------------
+On ne peut pas vraiment "supprimer" un commit, mais on a plusieurs options pour l'annuler. 
+Cependant, ces options ont des limites et sont à utiliser avec prudence et parcimonie !
+Je vous présente une de ces options : vous pouvez "revert" un commit, c'est-à-dire créer un nouveau commit qui fait l'inverse 
+du précédent, avec la commande suivante :
+
+git revert SHADuCommit
+
+Attention, ça crée un nouveau commit dans l'historique du coup ! (le commit "inverse" du précédent)
+
+Sinon, si vous voulez simplement modifier le message de votre dernier commit, vous pouvez utiliser la commande suivante :
+
+git commit --amend -m "Votre nouveau message"
+
+... mais attention, vous ne pouvez modifier ce message que si vous n'avez pas encore pushé votre commit sur l'origine !
+
+Je n'ai pas encore fait mon nouveau commit, mais je veux annuler tous les changements que je n'ai pas encore commités. Possible ?
+
+ Possible avec un reset !
+
+git reset --hard‌
+----------------------------------------------------------------------------------------------------
+une dernière petite astuce pour mieux vous y retrouver dans votre code en ligne : appuyez sur la touche t, 
+vous pourrez alors faire une recherche dans vos noms de fichiers en tapant un mot / des lettres clé ! 
+
+Cette commande demande à Git :
+
+    "Envoie mes modifs dans la branche master de mon remote origin."
+
+     La branche master est la branche qui contient le code courant de votre repo GitHub. 
+     Ne vous préoccupez pas trop du terme "branche", on y reviendra par la suite.
+
+    Le remote sur lequel vous envoyez votre code est appelé origin par défaut. Ici, ce remote est GitHub. 
+    Si vous aviez plusieurs remotes (par exemple, votre téléphone portable ou un 2e ordinateur), vous pourriez 
+    envoyer votre code sur un remote "téléphone" ou "ordi2".
+
+Lorsque vous lancez la commande git push, il est possible que l'on vous demande vos identifiants GitHub. 
+Renseignez-les dans le terminal !
+----------------------------------------------------------------------------------------------------
+
+Mais si vous modifiez votre repo GitHub en ligne, ou si vous travaillez avec d'autres personnes dessus et 
+qu'elles envoient leurs modifications locales sur le repo en ligne, votre code local ne sera plus à jour.
+
+Pour récupérer en local les dernières modifications du repo GitHub, il vous faut utiliser la commande git pull : 
+
+git pull origin master
+
+Vous reconnaissez la même syntaxe que pour la commande git push, qui demande ici à GitHub : 
+
+Envoie dans mon répertoire local les dernières modifications de la branche master située sur mon remote origin 
+(qui correspond ici à GitHub).
+----------------------------------------------------------------------------------------------------
+Comment est nommé le remote par défaut ? Origin
+Quelle est la commande Git qui permet d'envoyer ses modifications sur un remote ? Push
+Quelle est la commande Git qui permet de récupérer uniquement les dernières modifications faites sur un remote ? Pull
+----------------------------------------------------------------------------------------------------
+Les branches permettent de travailler sur des versions de code qui divergent de la branche principale contenant votre code courant. 
+Lorsque vous initialisez un repo Git, votre code est placé dans la branche principale appelée master par défaut. 
+Pour voir les branches présentes dans votre repo, utilisez la commande git branch. Elle vous retournera les branches présentes, et ajoutera une étoile devant la branche dans laquelle vous êtes placés. Par exemple, dans le 1er repos que vous avez créé dans la partie précédente, la commande git branch n'affichera qu'une seule branche, la branche principale dans laquelle vous vous situez : * master. 
+Pour créer une nouvelle branche, il vous suffit d'ajouter le nom de la branche à créer à la suite de la commande précédente :
+git branch nouvelle-branche
+
+Pour vous placer dans une autre branche à l'intérieur de votre repo, vous allez avoir besoin d'un nouveau mot-clé : checkout : 
+git checkout nouvelle-branche
+
+/!\ Petite astuce /!\
+pour manipuler vos branches : vous pouvez utiliser la commande 'git checkout -b' pour créer une branche et vous y positionner. Ainsi, au lieu de taper la commande suivante pour créer votre branche :
+git branch ma-branche
+, puis une deuxième commande pour vous y positionner :
+git checkout ma-branche
+, vous pouvez regrouper ces deux opérations en une seule commande : 
+git checkout -b ma-branche
+----------------------------------------------------------------------------------------------------
+Conflit:
+
+On sen place sur la branche où l'on veux rapatrier les données (master par ex.)
+on fait :
+ git merge mabranch
+une erreur apparait dans le fichier. On corrige et on fait un 
+git status
+git add le fichier
+git commit (sans -m et commentaires!!)
+
+on ferme le fichier qui nous indique les changements si besoin et le merge se fait automatiquement
+
+----------------------------------------------------------------------------------------------------
+Ici, nous avons résolu le conflit en ouvrant directement le fichier posant problème dans la console. 
+Sachez qu'il existe aussi des outils proposant des interfaces graphiques pour comparer les différences de versions d'un fichier. Personnellement je préfère rester dans la console, mais c'est une question de goût ; 
+n'hésitez pas à tester ces outils si vous êtes plus visuels ! À vous de tester parmi les nombreux outils existants : vimdiff, meld, opendiff, kdiff3, tkdiff, xxdiff, tortoisemerge, gvimdiff, diffuse, ecmerge, p4merge, araxis, emerge. 
+Pour lancer l'un de ces outils externes de merge avec la commande git mergetool, par exemple : 
+
+git mergetool vimdiff 
+----------------------------------------------------------------------------------------------------
